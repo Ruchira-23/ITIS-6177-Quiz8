@@ -1,0 +1,32 @@
+export const handler = async(event) => {
+    // // TODO implement
+    // const response = {
+    //     statusCode: 200,
+    //     body: JSON.stringify('Hello from Lambda!'+event.queryStringParamteres.keyword),
+    // };
+    // return response;
+    
+    
+    const queryStringParams = event.queryStringParameters;
+    
+    if (!queryStringParams) {
+        return {
+            statusCode: 400,
+            body: "No query string parameters found."
+        };
+    }
+    
+    const strng = queryStringParams.keyword;
+    
+    if (!strng) {
+        return {
+            statusCode: 400,
+            body: "No 'name' parameter found in query string."
+        };
+    }
+    
+    return {
+        statusCode: 200,
+        body: `Ruchira Ingle says, ${strng}!`
+    };
+};
