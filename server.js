@@ -1,6 +1,8 @@
 const express = require('express');
 const app= express();
 const port=3001;
+const axios = require('axios');
+const https = require('https');
 
 const swaggerJsdoc= require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
@@ -41,6 +43,27 @@ const pool = mariadb.createPool({
        port: 3306,
        connectionLimit: 5
 });
+
+
+
+
+app.get('/say', function(req,res) {
+
+        console.log(req.query.keyword);
+        https.get('https://7x52byviq7nk6h4mp6p3viwobi0fgvsl.lambda-url.us-east-2.on.aws/default/SI_Frst_Lambda?keyword='+req.query.keyword, (resp) => {
+        let data = '';
+
+  resp.on('data', (chunk) => {
+    data += chunk;
+    res.write(data);
+    res.end();
+  });
+
+})
+
+});
+
+
 
 /**
  * @swagger
